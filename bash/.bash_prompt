@@ -1,0 +1,35 @@
+#!/bin/bash
+
+if [ -f /usr/share/git/git-prompt.sh ]; then
+    . /usr/share/git/git-prompt.sh
+elif [ -f ~/.git-prompt.sh ]; then
+    . ~/.git-prompt.sh
+else
+    function __git_ps1 {
+        return
+    }
+fi
+
+txtgit='\e[0;33m' # Yellow
+txthost='\e[0;36m' # Cyan
+txtpwd='\e[1;32m' # Green
+txtrst='\e[0m'    # Text Reset
+
+print_before_the_prompt () {
+    if [[ -n $SSH_CLIENT ]]; then
+        printf "\n $txthost%s: $txtpwd%s $txtgit%s\n$txtrst" "$HOSTNAME" "$PWD" "$(__git_ps1)"
+    else
+        printf "\n $txtpwd%s $txtgit%s\n$txtrst" "$PWD" "$(__git_ps1)"
+    fi
+}
+
+PROMPT_COMMAND=print_before_the_prompt
+
+# Turn the prompt symbol red if the user is root
+if [ $(id -u) -eq 0 ];
+then # you are root, make the prompt red
+    export PS1="\[\e[31m\]->\[\e[m\] "
+else
+    export PS1="-> "
+fi
+
