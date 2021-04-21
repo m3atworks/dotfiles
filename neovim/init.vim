@@ -1,4 +1,5 @@
 set nocompatible
+
 set rtp+=~/.fzf
 
 call plug#begin('~/.config/nvim/plugged')
@@ -8,6 +9,9 @@ Plug 'junegunn/vim-easy-align'
 Plug 'roman/golden-ratio'
 Plug 'rust-lang/rust.vim'
 Plug 'hashivim/vim-terraform'
+Plug 'tpope/vim-fugitive'
+Plug 'neovim/nvim-lspconfig'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 call plug#end()
 
@@ -129,8 +133,12 @@ nmap <Leader>l :Blines<CR>
 nmap <Leader>L :Lines<CR>
 nmap <Leader>' :Marks<CR>
 
-" <Esc> to exit terminal-mode
-tnoremap <Esc> <C-\><C-n>
+" quickfix
+map <C-n> :cnext<CR>
+map <C-m> :cprevious<CR>
+nnoremap <leader>a :cclose<CR>
+
+let g:netrw_banner = 0
 
 " Terraform
 let g:terraform_align=1
@@ -148,4 +156,15 @@ if !exists('*ReloadVimrc')
    endfun
 endif
 autocmd! BufWritePost $MYVIMRC call ReloadVimrc()
+
+lua <<EOF
+    require'lspconfig'.gopls.setup{}
+EOF
+
+" vim-go
+let g:go_auto_type_info = 1
+let g:go_auto_sameids = 1
+
+autocmd FileType go nmap <leader>B  <Plug>(go-build)
+autocmd FileType go nmap <leader>r  <Plug>(go-run)
 
