@@ -3,6 +3,8 @@ alias aliases="${EDITOR} ~/.bash_aliases && source ~/.bash_aliases"
 
 # editing
 alias e="${EDITOR}"
+alias lp='leafpad'
+alias e.='Onivim2.AppImage'
 
 ## Colorize the ls output ##
 alias ls='ls --color=auto'
@@ -30,4 +32,15 @@ alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 
 alias mkdir='mkdir -pv'
+
+## tf work
+
+alias tf='podman run --rm -v "$(pwd)":/data -it --net=host terraform-aws:wip'
+
+alias docker=podman
+
+alias butane='podman run --rm --tty --interactive \
+              --security-opt label=disable        \
+              --volume ${PWD}:/pwd --workdir /pwd \
+              quay.io/coreos/butane:release'
 
