@@ -1,0 +1,12 @@
+
+# User specific environment
+if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
+then
+    export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+fi
+
+# go
+export PATH="/usr/local/go/bin:$HOME/go/bin:$PATH"
+export GOPATH="$HOME/go"
+
+export FZF_TMUX=1
